@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"sqltools.connections": [
+			{
+				"askForPassword": true,
+				"database": "qa",
+				"dialect": "MySQL",
+				"isActive": true,
+				"isConnected": true,
+				"name": "myAllBases",
+				"port": 3306,
+				"server": "localhost",
+				"username": "root"
+			}
+		]
+	}
+}
