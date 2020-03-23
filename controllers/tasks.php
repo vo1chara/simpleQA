@@ -20,8 +20,10 @@ class Controller_Tasks extends Controller_Base
                     $usertask[$key]['question'] = $row['question'];
                     if ($usertask[$key]['answer'] != $row['answer']) {
                         $usertask[$key]['result'] = 'NOT';
+                        $usertask[$key]['final'] = 0;
                     } else {
                         $usertask[$key]['result'] = 'YES';
+                        $usertask[$key]['final'] = 1;
                     }
                 }
             }
@@ -32,22 +34,46 @@ class Controller_Tasks extends Controller_Base
             $randQues = $model->getRowById(rand(1, 100)); // получаем все строки     
         }
         $flag = false;
-        if (isset($_POST) && !empty($_POST)) {
-            if (isset($_POST['answer']) && !empty($_POST['answer'])) {
-                $id_task = $this->normalize($_POST['id_task']);
-                $id_user = $_SESSION['id'];
-                $answer = $this->normalize($_POST['answer']);
+        $count = count($usertask);
+        $score = 0;
+        if($count < 10){
+            if (isset($_POST) && !empty($_POST)) {
+                if (isset($_POST['answer']) && !empty($_POST['answer'])) {
 
-                $insans = "INSERT INTO usertask VALUES (null,'$id_task','$id_user','$answer')";
-                $ins = Model_Base::connect()->prepare($insans);
-                $ins->execute();
-                $flag = true;
-                unset($_POST);
+                    $sql = "SELECT * FROM tasks"; //sql запрос к бд
+                    $model = new Model_Tasks($sql); // создаем объект модели
+                    $rows = $model->getAllRows(); // получаем все строки
+                    $id_task = $this->normalize($_POST['id_task']);
+                    $id_user = $_SESSION['id'];
+                    $answer = $this->normalize($_POST['answer']);
+                    foreach ($rows as $row){
+                        if($row['id'] == $id_task && $row['answer'] == $answer){
+                            $result = 1;
+                            break;
+                        } else {
+                            $result = 0;
+                        }
+                    }
+
+                    $insans = "INSERT INTO usertask VALUES (null,'$id_task','$id_user','$result','$answer')";
+                    $ins = Model_Base::connect()->prepare($insans);
+                    $ins->execute();
+                    $flag = true;
+                    unset($_POST);
+                }
+            }
+            $this->template->vars('tasks', $usertask);
+            $this->template->vars('randQues', $randQues);
+        } else {
+            foreach ($usertask as $key => $task){
+                $score+=$usertask[$key]['final'];
             }
         }
+
+        $this->template->vars('count',$count);
+        $this->template->vars('score',$score);
         $this->template->vars('flag', $flag);
-        $this->template->vars('tasks', $usertask);
-        $this->template->vars('randQues', $randQues);
+
         $this->template->view('index');
     }
     function all()
@@ -57,11 +83,15 @@ class Controller_Tasks extends Controller_Base
             $model = new Model_Usertask($sql); // создаем объект модели
             $rows = $model->getAllRows(); // получаем все строки
 
-            $usertask = $rows;
+           
 
+            $usertask = $rows;
+           
             $sql = "SELECT * FROM tasks"; //sql запрос к бд
             $model = new Model_Tasks($sql); // создаем объект модели
             $rows = $model->getAllRows(); // получаем все строки
+
+
 
             foreach ($usertask as $key => $item) {
                 foreach ($rows as $row) {
@@ -74,8 +104,15 @@ class Controller_Tasks extends Controller_Base
                         }
                         $usertask[$key]['right_answer'] = $row['answer'];
                     }
+                    $id = $usertask[$key]['id_user'];
+                    $sql = "SELECT * FROM users WHERE id = '$id'"; //sql запрос к бд
+                    $model = new Model_Users($sql); // создаем объект модели
+                    $usertask[$key]['user']['first_name'] = $model->getOneRow()['first_name']; // получаем все строки
+                    $usertask[$key]['user']['last_name'] = $model->getOneRow()['last_name']; // получаем все строки
+                    
                 }
             }
+        
             $this->template->vars('tasks', $usertask);
             $this->template->view('all');
         }
@@ -88,7 +125,7 @@ class Controller_Tasks extends Controller_Base
 
         $flag = false;
         if (isset($_POST) && !empty($_POST)) {
-            if($_POST['action'] == 'insert'){
+            if ($_POST['action'] == 'insert') {
                 $question = $this->normalize($_POST['question']);
                 $answer = $this->normalize($_POST['answer']);
 
