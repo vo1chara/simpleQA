@@ -22,7 +22,6 @@ class Controller_Users extends Controller_Base
     private function getRowByEmail($email)
     {
         $sql = "SELECT * FROM users WHERE email = '$email'"; //sql запрос к бд
-        echo $sql;
         $model = new Model_Users($sql); // создаем объект модели
         $rows = $model->getOneRow(); // получаем все строки
         return $rows;
