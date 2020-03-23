@@ -8,6 +8,8 @@
         header("Refresh: 0; url=/simpleQA/tasks/");
     } ?>
  <div class="container">
+  
+     <?php if($count < 10):?>
      <table>
          <tr>
              <th>вопрос</th>
@@ -25,7 +27,6 @@
                  </tr>
              <?php endforeach; ?>
          <?php } ?>
-
      </table>
 
      <div class="row">
