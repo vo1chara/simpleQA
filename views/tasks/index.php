@@ -45,4 +45,8 @@
              <button type="submit" class="btn btn-primary">Добавить</button>
          </form>
      </div>
+     <?php else: ?>
+     <h2 style="text-align: center">Ваш результат : <?=$score?> из <?=$count?></h2>
+     <h1 style="text-align: center">Оценка <?=$score/$count*5?></h1>
+     <?php endif;?>
  </div>
