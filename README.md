@@ -2,7 +2,6 @@
 # simpleQA
 Сначала заходишь в папку с XAMPP, где проекты /XAMPP/htdocs/
 Там, правой кнопкой мыши внутри папки и выбрать Git Bash Here
-<p><img src="https://sun9-62.userapi.com/c853628/v853628105/132611/1K5CnBCb0nw.jpg" alt=""></p>
 после вести в открывшуюся консоль git clone https://github.com/destroyandromeda/simpleQA.git
 
 
