@@ -39,10 +39,11 @@ CREATE TABLE `tasks` (
 --
 
 INSERT INTO `tasks` (`id`, `question`, `answer`) VALUES
-(2, 'q2', 'a2'),
-(17, 'q3', 'a3'),
-(18, 'q4', 'a4'),
-(19, 'q5', 'a5');
+(1, 'Сколько планет в Солнечной системе?', 'девять'),
+(2, 'Какой по счёту от Солнца является Земля?', 'третья'),
+(3, 'Какая самая близкая звезда к Земле?', 'солнце'),
+(4, 'В какую сторону обычно направлен хвост кометы?', 'противоположную'),
+(5, 'Сколько камер имеет человеческое сердце?', 'четыре');
 
 -- --------------------------------------------------------
 
@@ -64,10 +65,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `first_name`, `last_name`, `role`) VALUES
-(1, 'test', 'test', 'imya', 'familua', 0),
-(2, 'test1', 'test1', 'imya1', 'familua1', 0),
-(3, 'test2', 'test2', 'imya2', 'familua2', 0),
-(4, '123', '123', '123', '123', 1);
+(1, '123', '123', '123', '123', 1),
+(2, 'test', 'test', 'imya', 'familua', 0);
 
 -- --------------------------------------------------------
 
@@ -79,18 +78,9 @@ CREATE TABLE `usertask` (
   `id` int(11) NOT NULL,
   `id_task` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `result` int(11) DEFAULT NULL,
   `answer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Дамп данных таблицы `usertask`
---
-
-INSERT INTO `usertask` (`id`, `id_task`, `id_user`, `answer`) VALUES
-(5, 17, 4, '12321'),
-(8, 17, 1, '2324'),
-(10, 2, 4, 'a2'),
-(11, 18, 4, 'a4');
 
 --
 -- Индексы сохранённых таблиц
@@ -123,19 +113,19 @@ ALTER TABLE `usertask`
 -- AUTO_INCREMENT для таблицы `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `usertask`
 --
 ALTER TABLE `usertask`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
