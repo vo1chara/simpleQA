@@ -2,7 +2,7 @@
 # simpleQA
 Сначала заходишь в папку с XAMPP, где проекты /XAMPP/htdocs/
 Там, правой кнопкой мыши внутри папки и выбрать Git Bash Here
-после вести в открывшуюся консоль git clone https://github.com/destroyandromeda/simpleQA.git
+после вести в открывшуюся консоль git clone https://github.com/vo1chara/simpleQA.git
 
 
 После того, как стартанете в XAMPP apache и mysql
